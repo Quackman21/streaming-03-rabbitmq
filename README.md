@@ -1,4 +1,10 @@
 # streaming-03-rabbitmq
+## streaming-03-rabbitmq
+### Ivan Quackenbush
+### CSIS 44671: Streaming Data
+### 7 September 2023
+### Module 3: RabbitMQ
+### https://github.com/Quackman21/streaming-03-rabbitmq
 
 > Get started with RabbitMQ, a message broker, that enables multiple processes to communicate reliably through an intermediary.
 
@@ -119,7 +125,7 @@ Sending the same message each time is kind of boring. This time:
 
 Repeat this process several times - emit at least 4 different messages.
 Don't worry - it's just code. We can always revert back (try the 'undo' command in VS Code) to a version that works. You can't hurt anything.
-
+![Alt text](<Two Terminals.png>)
 ## Task 9. Save Time & Effort: Don't Repeat Yourself
 
 Did you notice you had to change the message in TWO places?
