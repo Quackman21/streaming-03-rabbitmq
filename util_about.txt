@@ -1,0 +1,27 @@
+
+======================================================================
+======================================================================
+ Welcome to the NW Python Debugging Information Utility!
+ Date and Time: 2023-09-04 at 11:48 AM
+ Operating System: posix Darwin 21.3.0
+ System Architecture: 64bit
+ Number of CPUs: 8
+ Machine Type: x86_64
+ Python Version: 3.10.6
+ Python Build Date and Compiler: v3.10.6:9c7b4bd164 with Aug  1 2022 17:13:48
+ Python Implementation: CPython
+ Active pip environment:   None
+ Active conda environment: None
+ Path to Interpreter:         /Users/ivanquackenbush/Documents/44-608/Streaming-Data/streaming-03-rabbitmq/.venv/bin/python
+ Path to virtual environment: /Users/ivanquackenbush/Documents/44-608/Streaming-Data/streaming-03-rabbitmq/.venv
+ Current Working Directory:   /Users/ivanquackenbush/Documents/44-608/Streaming-Data/streaming-03-rabbitmq
+ Path to source directory:    /Users/ivanquackenbush/Documents/44-608/Streaming-Data/streaming-03-rabbitmq
+ Path to script file:         /Users/ivanquackenbush/Documents/44-608/Streaming-Data/streaming-03-rabbitmq/util_about.py
+ User's Home Directory:       /Users/ivanquackenbush
+ Terminal Environment:        VS Code
+ Terminal Type:               bash
+ Preferred command:           python3
+ Is python3 available in PATH:   True
+ Is git available in PATH:      True 
+======================================================================
+======================================================================

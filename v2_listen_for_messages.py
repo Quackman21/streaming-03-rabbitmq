@@ -1,75 +1,35 @@
-"""
-
-Message listener 
-
-Description:
-This script continuously listens for messages on a named queue.
-This terminal must be open and dedicated to this process. 
-(If you want to emit messages, open a different terminal window.)
-
-Remember:
-- Use Control + C to close a terminal and end the listening process.
-- Use the up arrow to recall the last command executed in the terminal.
-"""
-
-
-# Import necessary modules from the Python Standard Library
-import sys
-
-# Import the pika library to facilitate communication with RabbitMQ
+# add imports at the beginning of the file
 import pika
+import sys  # Import the sys module for sys.exit()
 
-# Import the custom logger setup utility (local file named util_logger.py)
-from util_logger import setup_logger
+# Define the logger setup function here or import it if it's defined elsewhere
+# ...
 
-# Setup custom logging
-logger, logname = setup_logger(__file__)
-
-# ---------------------------------------------------------------------------
-# Define program functions (bits of reusable code)
-# ---------------------------------------------------------------------------
-
-
+# define a callback function to be called when a message is received
 def process_message(ch, method, properties, body):
-    """
-    Callback function to process a received message.
-    The signature of this function is defined by the Pika library.
-
-    Parameters:
-    - ch: The channel object from RabbitMQ. It provides methods to interact with the protocol,
-          but we don't need them in this particular callback.
-    - method: Contains details about the delivery method and its properties,
-              such as the delivery tag or the exchange/routing key.
-              We don't use it in this example.
-    - properties: Message properties like content_type or delivery_mode.
-                  Not used here since we're focused on the message body.
-    - body: The body of the message (the actual content).
-    """
-    logger.info(f"Received: {body.decode()}")
-
+    """ Define behavior on getting a message."""
+    print(" [x] Received %r" % body.decode())
 
 # define a main function to run the program
-# pass in the hostname as a string parameter if you like
-# if no argument is provided, set a default value to localhost
-def main(hn: str = "localhosttt"):
+def main(hn: str = "localhost"):
     """Main program entry point."""
-
+    
     # when a statement can go wrong, use a try-except block
     try:
-        # try this code, if it works, keep going
+        # try this code, if it works, keep going  
         # create a blocking connection to the RabbitMQ server
         connection = pika.BlockingConnection(pika.ConnectionParameters(host=hn))
 
     # except, if there's an error, do this
     except Exception as e:
-        logger.error()
-        logger.error("ERROR: connection to RabbitMQ server failed.")
-        logger.error(f"Verify the server is running on host={hn}.")
-        logger.error(f"The error says: {e}")
-        logger.error()
+        print()
+        print("ERROR: connection to RabbitMQ server failed.")
+        print(f"Verify the server is running on host={hn}.")
+        print(f"The error says: {e}")
+        print()
         sys.exit(1)
 
-    try:
+    try: 
         # use the connection to create a communication channel
         channel = connection.channel()
 
@@ -77,34 +37,31 @@ def main(hn: str = "localhosttt"):
         channel.queue_declare(queue="hello")
 
         # use the channel to consume messages from the queue
-        # on getting a message, execute the login in the callback function
-        channel.basic_consume(
-            queue="hello", on_message_callback=process_message, auto_ack=True
-        )
+        channel.basic_consume(queue="hello", on_message_callback=process_message, auto_ack=True)
 
         # print a message to the console for the user
-        logger.info(" [*] Waiting for messages. To exit press CTRL+C")
+        print(" [*] Waiting for messages. To exit press CTRL+C")
 
         # start consuming messages via the communication channel
         channel.start_consuming()
 
     # except, in the event of an error OR user stops the process, do this
     except Exception as e:
-        logger.error(
-            "ERROR: An issue occurred while setting up or listening for messages."
-        )
-        logger.error(f"Error Details: {e}")
+        print()
+        print("ERROR: something went wrong.")
+        print(f"The error says: {e}")
         sys.exit(1)
     except KeyboardInterrupt:
-        logger.warning("User interrupted the listening process.")
+        print()
+        print(" User interrupted continuous listening process.")
         sys.exit(0)
     finally:
-        logger.info("Closing connection. Goodbye.")
+        print("\nClosing connection. Goodbye.\n")
         connection.close()
 
-
-# ---------------------------------------------------------------------------
-# If this is the script we are running, then call some functions and execute code!
-# ---------------------------------------------------------------------------
+# Standard Python idiom to indicate main program entry point
+# This allows us to import this module and use its functions
+# without executing the code below.
+# If this is the program being run, then execute the code below
 if __name__ == "__main__":
-    main()
+    main("localhost")
